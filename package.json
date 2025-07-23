@@ -1,4 +1,12 @@
 {
+  "name": "ai-vessel-finance",
+  "version": "1.0.0",
+  "description": "AI-powered vessel purchasing and financial analysis web application",
+  "scripts": {
+    "start": "echo 'This is a multi-service app. Deploy backend and frontend separately from their respective directories.'",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm run dev"
+  },
   "dependencies": {
     "node-fetch": "^3.3.2"
   }

@@ -24,7 +24,9 @@
       "Bash(del test-vessel-extraction.js)",
       "Bash(del backendtest-vessel-extraction.js)",
       "Bash(rm:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(git pull:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
