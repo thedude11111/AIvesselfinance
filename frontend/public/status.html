@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>App Status</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .status { padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .good { background: #d4edda; color: #155724; }
+        .bad { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>🔍 App Status Check</h1>
+    
+    <div id="results">Loading...</div>
+    
+    <script>
+        async function checkStatus() {
+            const results = document.getElementById('results');
+            let html = '';
+            
+            // Check Backend
+            try {
+                const response = await fetch('http://localhost:5001/api/health');
+                const data = await response.json();
+                html += `<div class="status good">✅ Backend: ${data.status} (Gemini: ${data.services.gemini}, Firestore: ${data.services.firestore})</div>`;
+            } catch (error) {
+                html += `<div class="status bad">❌ Backend: Connection failed - ${error.message}</div>`;
+            }
+            
+            // Check Frontend
+            try {
+                const response = await fetch('http://localhost:3002');
+                if (response.ok) {
+                    html += `<div class="status good">✅ Frontend: Serving on port 3002</div>`;
+                } else {
+                    html += `<div class="status bad">❌ Frontend: Not responding properly (${response.status})</div>`;
+                }
+            } catch (error) {
+                html += `<div class="status bad">❌ Frontend: Connection failed - ${error.message}</div>`;
+            }
+            
+            // Check Auth API
+            try {
+                const response = await fetch('http://localhost:5001/api/analyses');
+                const data = await response.json();
+                if (response.status === 401) {
+                    html += `<div class="status info">ℹ️ Auth API: Working (returns 401 as expected without token)</div>`;
+                } else {
+                    html += `<div class="status bad">❌ Auth API: Unexpected response (${response.status})</div>`;
+                }
+            } catch (error) {
+                html += `<div class="status bad">❌ Auth API: Connection failed - ${error.message}</div>`;
+            }
+            
+            html += `
+                <br>
+                <div class="status info">
+                    <strong>📋 Instructions:</strong><br>
+                    1. Go to <a href="http://localhost:3002">http://localhost:3002</a><br>
+                    2. Open browser developer tools (F12)<br>
+                    3. Look at the Console tab for detailed logs<br>
+                    4. Sign in with Google<br>
+                    5. Watch the console logs to see what happens
+                </div>
+            `;
+            
+            results.innerHTML = html;
+        }
+        
+        checkStatus();
+        setInterval(checkStatus, 10000); // Refresh every 10 seconds
+    </script>
+</body>
+</html>

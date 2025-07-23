@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(chcp:*)",
+      "Bash(PYTHONIOENCODING=utf-8 python \"C:\\Users\\jimmy\\Documents\\Programming\\Claude simple script\\Claudesimplescript.py\")",
+      "Bash(PYTHONIOENCODING=utf-8 python Claudesimplescript.py)",
+      "Bash(cp:*)",
+      "Bash(set PYTHONIOENCODING=utf-8)",
+      "Bash(mkdir:*)",
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npm start)",
+      "Bash(taskkill:*)",
+      "Bash(npm run dev:*)",
+      "Bash(node test-runner.js all)",
+      "Bash(npm test)",
+      "Bash(npm test:*)",
+      "Bash(npm run test:coverage:*)",
+      "Bash(node:*)",
+      "Bash(curl:*)",
+      "Bash(start npm run dev)",
+      "Bash(cmd /c:*)",
+      "Bash(del test-vessel-extraction.js)",
+      "Bash(del backendtest-vessel-extraction.js)",
+      "Bash(rm:*)",
+      "Bash(git init:*)"
+    ],
+    "deny": []
+  }
+}

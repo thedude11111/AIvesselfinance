@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Auth State</title>
+    <script type="module">
+        // Import Firebase from CDN for quick testing
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        
+        // Initialize Firebase (using your config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAks6g1U3aXo2jTSohZ94R1HWAa6Vq8dHw",
+            authDomain: "brickid-auth.firebaseapp.com",
+            projectId: "brickid-auth",
+            storageBucket: "brickid-auth.firebasestorage.app",
+            messagingSenderId: "504379670481",
+            appId: "1:504379670481:web:d5db05ea2ab5dce1a5aaf0"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        console.log('🔧 Firebase initialized for debugging');
+        
+        // Monitor auth state changes
+        onAuthStateChanged(auth, (user) => {
+            const statusDiv = document.getElementById('auth-status');
+            const timestampDiv = document.getElementById('timestamp');
+            
+            timestampDiv.textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+            
+            if (user) {
+                statusDiv.innerHTML = `
+                    <div style="background: #d4edda; padding: 15px; border-radius: 5px;">
+                        <h3>✅ User Authenticated</h3>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Name:</strong> ${user.displayName}</p>
+                        <p><strong>UID:</strong> ${user.uid}</p>
+                        <p><strong>Token available:</strong> Yes</p>
+                        <button onclick="testToken()">Test API Call</button>
+                    </div>
+                `;
+            } else {
+                statusDiv.innerHTML = `
+                    <div style="background: #f8d7da; padding: 15px; border-radius: 5px;">
+                        <h3>❌ No User Authentication</h3>
+                        <p>User is not signed in</p>
+                        <a href="/" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                            Go to Main App to Sign In
+                        </a>
+                    </div>
+                `;
+            }
+        });
+        
+        window.testToken = async function() {
+            const resultDiv = document.getElementById('api-result');
+            
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    resultDiv.innerHTML = '<div style="color: red;">No user found</div>';
+                    return;
+                }
+                
+                const token = await user.getIdToken();
+                resultDiv.innerHTML = '<div style="color: blue;">Getting token...</div>';
+                
+                // Test API call
+                const response = await fetch('http://localhost:5001/api/analyses', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `<div style="color: green;">✅ API call successful: ${JSON.stringify(data)}</div>`;
+                } else {
+                    const error = await response.text();
+                    resultDiv.innerHTML = `<div style="color: red;">❌ API call failed (${response.status}): ${error}</div>`;
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: red;">❌ Error: ${error.message}</div>`;
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>🔍 Firebase Auth Debug</h1>
+    
+    <div id="timestamp"></div>
+    <div id="auth-status">Loading...</div>
+    <div id="api-result"></div>
+    
+    <hr>
+    <p><a href="/">← Back to Main App</a></p>
+</body>
+</html>

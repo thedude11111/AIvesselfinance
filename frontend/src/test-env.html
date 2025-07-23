@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environment Variables Test</title>
+</head>
+<body>
+    <h1>Environment Variables Test</h1>
+    <div id="env-info"></div>
+    
+    <script>
+        document.getElementById('env-info').innerHTML = `
+            <h2>Firebase Configuration:</h2>
+            <ul>
+                <li>API Key: ${typeof process !== 'undefined' && process.env ? process.env.REACT_APP_FIREBASE_API_KEY || 'Not defined' : 'Process not available'}</li>
+                <li>Auth Domain: ${typeof process !== 'undefined' && process.env ? process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || 'Not defined' : 'Process not available'}</li>
+                <li>Project ID: ${typeof process !== 'undefined' && process.env ? process.env.REACT_APP_FIREBASE_PROJECT_ID || 'Not defined' : 'Process not available'}</li>
+            </ul>
+        `;
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Vessel Finance - Auth Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        #log { background: #f8f9fa; padding: 20px; margin-top: 20px; border-radius: 5px; max-height: 400px; overflow-y: scroll; }
+    </style>
+</head>
+<body>
+    <h1>🧪 AI Vessel Finance - Authentication & API Test</h1>
+    
+    <div class="info">
+        <strong>Test Status:</strong> This page tests the authentication flow and API connectivity.
+    </div>
+    
+    <div>
+        <button onclick="testBackendHealth()">1. Test Backend Health</button>
+        <button onclick="testFrontendApp()">2. Test Frontend App</button>
+        <button onclick="simulateAuthFlow()">3. Simulate Auth Flow</button>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+    
+    <div id="status"></div>
+    <div id="log"></div>
+    
+    <script>
+        let logDiv = document.getElementById('log');
+        let statusDiv = document.getElementById('status');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function setStatus(message, type = 'info') {
+            statusDiv.innerHTML = `<div class="${type}">${message}</div>`;
+        }
+        
+        function clearLog() {
+            logDiv.innerHTML = '';
+            statusDiv.innerHTML = '';
+        }
+        
+        async function testBackendHealth() {
+            log('🔍 Testing backend health...');
+            try {
+                const response = await fetch('http://localhost:5001/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log(`✅ Backend healthy: ${data.status}`);
+                    log(`📊 Services: Gemini=${data.services.gemini}, Firestore=${data.services.firestore}`);
+                    setStatus('✅ Backend is healthy and services are available', 'success');
+                } else {
+                    log(`❌ Backend health check failed: ${response.status}`);
+                    setStatus('❌ Backend health check failed', 'error');
+                }
+            } catch (error) {
+                log(`❌ Backend connection error: ${error.message}`);
+                setStatus('❌ Cannot connect to backend', 'error');
+            }
+        }
+        
+        async function testFrontendApp() {
+            log('🌐 Testing frontend app...');
+            try {
+                const response = await fetch('http://localhost:3002');
+                if (response.ok) {
+                    log('✅ Frontend app is serving');
+                    setStatus('✅ Frontend app is accessible', 'success');
+                    
+                    // Check if main bundle loads
+                    const html = await response.text();
+                    if (html.includes('AI Vessel Finance')) {
+                        log('✅ Frontend app title found');
+                    } else {
+                        log('⚠️ Frontend app title not found in HTML');
+                    }
+                } else {
+                    log(`❌ Frontend app response: ${response.status}`);
+                    setStatus('❌ Frontend app not accessible', 'error');
+                }
+            } catch (error) {
+                log(`❌ Frontend connection error: ${error.message}`);
+                setStatus('❌ Cannot connect to frontend', 'error');
+            }
+        }
+        
+        function simulateAuthFlow() {
+            log('🔐 Simulating authentication flow...');
+            log('ℹ️ This test simulates what happens during sign-in:');
+            log('1. User clicks sign in with Google');
+            log('2. Firebase auth popup appears');
+            log('3. User completes Google OAuth');
+            log('4. App gets ID token');
+            log('5. App sends token to backend for verification');
+            log('6. Backend verifies token with Firebase Admin');
+            log('7. User data is saved to Firestore');
+            log('8. App loads user-specific data');
+            
+            setStatus('ℹ️ Authentication flow simulation complete. Try signing in through the main app!', 'info');
+        }
+        
+        // Auto-run backend health check
+        window.onload = () => {
+            log('🚀 Starting diagnostic tests...');
+            testBackendHealth();
+        };
+    </script>
+</body>
+</html>

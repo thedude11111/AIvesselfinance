@@ -1,0 +1,73 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.railway
+backend/.env*
+frontend/.env*
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Firebase
+.firebase/
+.firebaserc
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Service account keys (NEVER commit these!)
+service-account-key.json
+*-service-account.json
+firebase-adminsdk-*.json
+
+# Railway specific
+.railway/
+
+# Backup files
+*.bak
+*.backup
+
+# Cache directories
+.cache/
+.parcel-cache/

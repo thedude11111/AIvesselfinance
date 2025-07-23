@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environment Test</title>
+    <script type="module">
+        // Test if environment variables are properly defined
+        console.log('Testing environment variables...');
+        console.log('REACT_APP_FIREBASE_API_KEY:', 'AIzaSyAks6g1U3aXo2jTSohZ94R1HWAa6Vq8dHw');
+        console.log('REACT_APP_API_URL:', 'http://localhost:5001/api');
+        
+        // Test fetch to backend
+        fetch('http://localhost:5001/api/health')
+            .then(res => res.json())
+            .then(data => {
+                console.log('Backend health check:', data);
+                document.getElementById('status').innerHTML = `
+                    <h2>✅ Backend Connected</h2>
+                    <p>Status: ${data.status}</p>
+                    <p>Gemini: ${data.services.gemini}</p>
+                    <p>Firestore: ${data.services.firestore}</p>
+                `;
+            })
+            .catch(err => {
+                console.error('Backend connection failed:', err);
+                document.getElementById('status').innerHTML = `
+                    <h2>❌ Backend Connection Failed</h2>
+                    <p>${err.message}</p>
+                `;
+            });
+    </script>
+</head>
+<body>
+    <h1>AI Vessel Finance - Connection Test</h1>
+    <div id="status">Testing connection...</div>
+    
+    <p><a href="/">← Back to App</a></p>
+</body>
+</html>

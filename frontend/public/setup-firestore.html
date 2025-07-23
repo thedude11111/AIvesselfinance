@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Setup Firestore Database</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        .step { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #007bff; }
+        .warning { background: #fff3cd; border-left-color: #ffc107; }
+        .success { background: #d4edda; border-left-color: #28a745; }
+        code { background: #f1f1f1; padding: 2px 6px; border-radius: 3px; }
+        .button { display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px 5px; }
+    </style>
+</head>
+<body>
+    <h1>🔥 Setup Firestore Database</h1>
+    
+    <div class="warning step">
+        <h3>⚠️ Current Issue</h3>
+        <p>Your AI Vessel Finance app is trying to connect to Firestore, but the database hasn't been enabled in your Firebase project yet. This is causing the "5 NOT_FOUND" errors.</p>
+    </div>
+    
+    <div class="step">
+        <h3>📋 Step 1: Go to Firebase Console</h3>
+        <p>1. Open <a href="https://console.firebase.google.com/" target="_blank">Firebase Console</a></p>
+        <p>2. Select your project: <code>brickid-auth</code></p>
+    </div>
+    
+    <div class="step">
+        <h3>🗄️ Step 2: Enable Firestore</h3>
+        <p>1. In the left sidebar, click <strong>"Firestore Database"</strong></p>
+        <p>2. Click <strong>"Create database"</strong></p>
+        <p>3. Choose <strong>"Start in test mode"</strong> (for development)</p>
+        <p>4. Select a location (choose the closest to your location)</p>
+        <p>5. Click <strong>"Done"</strong></p>
+    </div>
+    
+    <div class="step">
+        <h3>🔐 Step 3: Configure Security Rules (Optional but Recommended)</h3>
+        <p>1. Go to <strong>"Rules"</strong> tab in Firestore</p>
+        <p>2. Replace the default rules with:</p>
+        <pre><code>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read/write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Users can read/write their own analyses
+    match /analyses/{document} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+  }
+}</code></pre>
+        <p>3. Click <strong>"Publish"</strong></p>
+    </div>
+    
+    <div class="success step">
+        <h3>✅ Step 4: Test the Fix</h3>
+        <p>1. Once Firestore is enabled, refresh your app</p>
+        <p>2. The 500 errors should disappear</p>
+        <p>3. Try signing in and using the AI chatbot</p>
+    </div>
+    
+    <div class="step">
+        <h3>🚀 After Setup</h3>
+        <p>Your app will be able to:</p>
+        <ul>
+            <li>✅ Store user authentication data</li>
+            <li>✅ Save vessel analysis results</li>
+            <li>✅ Load previous analyses</li>
+            <li>✅ Use the AI chatbot without errors</li>
+        </ul>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="/" class="button">← Back to App</a>
+        <a href="https://console.firebase.google.com/" target="_blank" class="button">Open Firebase Console</a>
+        <a href="/status.html" class="button">Check App Status</a>
+    </div>
+</body>
+</html>
