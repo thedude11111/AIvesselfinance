@@ -15,7 +15,7 @@ This is an AI-powered vessel purchasing and financial analysis web application. 
 ### Technology Stack
 - **Frontend**: React with Vite, Tailwind CSS, Recharts for data visualization
 - **Backend**: Node.js with Express.js
-- **Database**: Google Firestore (Firebase project: brickid-auth)
+- **Database**: Google Firestore
 - **Authentication**: Firebase Authentication with Google OAuth
 - **AI**: Google Gemini 2.5 Flash Lite for parameter extraction and conversational analysis
 - **Deployment**: Railway (automatic deployments from GitHub)

@@ -58,7 +58,7 @@ REACT_APP_FIREBASE_APP_ID=your-app-id
 ```
 
 ### Step 5: Connect Services
-1. **Get your backend URL** from Railway dashboard (e.g., `https://ai-vessel-backend-production.up.railway.app`)
+1. **Get your backend URL** from Railway dashboard (e.g., `https://your-backend-domain.up.railway.app`)
 2. **Add to frontend variables**:
    ```env
    REACT_APP_API_URL=https://your-backend-url.up.railway.app/api
