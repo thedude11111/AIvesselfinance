@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is an AI-powered vessel purchasing and financial analysis web application. The core innovation is a Gemini AI chatbot that extracts financial parameters from natural language input, feeds them into a vessel financial model, and presents results through interactive visualizations.
 
 **Current Status**: ✅ **LIVE IN PRODUCTION** on Railway
-- **Frontend**: https://ai-vessel-frontend-production.up.railway.app
-- **Backend**: https://ai-vessel-backend-production.up.railway.app
+- **Frontend**: https://your-frontend-domain.up.railway.app
+- **Backend**: https://your-backend-domain.up.railway.app
 
 ## Architecture
 
@@ -129,22 +129,22 @@ React components use props/context for state management across:
 **Backend Environment Variables**:
 ```env
 NODE_ENV=production
-FIREBASE_PROJECT_ID=brickid-auth
+FIREBASE_PROJECT_ID=your-project-id
 FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n
-FIREBASE_CLIENT_EMAIL=service-account@brickid-auth.iam.gserviceaccount.com
+FIREBASE_CLIENT_EMAIL=service-account@your-project.iam.gserviceaccount.com
 GOOGLE_AI_API_KEY=your-gemini-api-key
-CORS_ORIGIN=https://ai-vessel-frontend-production.up.railway.app
+CORS_ORIGIN=https://your-frontend-domain.up.railway.app
 ```
 
 **Frontend Environment Variables**:
 ```env
-REACT_APP_API_URL=https://ai-vessel-backend-production.up.railway.app/api
-REACT_APP_FIREBASE_API_KEY=AIzaSyAks6g1U3aXo2jTSohZ94R1HWAa6Vq8dHw
-REACT_APP_FIREBASE_AUTH_DOMAIN=brickid-auth.firebaseapp.com
-REACT_APP_FIREBASE_PROJECT_ID=brickid-auth
-REACT_APP_FIREBASE_STORAGE_BUCKET=brickid-auth.firebasestorage.app
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=504379670481
-REACT_APP_FIREBASE_APP_ID=1:504379670481:web:d5db05ea2ab5dce1a5aaf0
+REACT_APP_API_URL=https://your-backend-domain.up.railway.app/api
+REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+REACT_APP_FIREBASE_APP_ID=your-app-id
 ```
 
 #### Local Development
@@ -164,9 +164,9 @@ The application follows a clear separation between AI parameter extraction (chat
 
 ### Production Environment
 - **Status**: ✅ Live and operational
-- **Frontend URL**: https://ai-vessel-frontend-production.up.railway.app
-- **Backend URL**: https://ai-vessel-backend-production.up.railway.app  
-- **Health Check**: https://ai-vessel-backend-production.up.railway.app/health
+- **Frontend URL**: https://your-frontend-domain.up.railway.app
+- **Backend URL**: https://your-backend-domain.up.railway.app  
+- **Health Check**: https://your-backend-domain.up.railway.app/health
 - **Deployment Platform**: Railway (automatic deployments)
 - **Cost**: ~$10/month ($5 per service)
 
